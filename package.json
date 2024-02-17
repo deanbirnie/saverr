@@ -1,0 +1,20 @@
+{
+  "name": "saverr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/deanbirnie/saverr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deanbirnie/saverr/issues"
+  },
+  "homepage": "https://github.com/deanbirnie/saverr#readme"
+}
