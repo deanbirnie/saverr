@@ -2,7 +2,7 @@
   "name": "saverr",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +18,5 @@
   },
   "homepage": "https://github.com/deanbirnie/saverr#readme",
   "dependencies": {
-    "nodemon": "^3.0.3",
-    "sqlite3": "^5.1.7"
   }
 }
