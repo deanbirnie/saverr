@@ -5,18 +5,30 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start-backend": "nodemon ./src/db/default.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-backend": "nodemon --verbose index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.10.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
-    "nodemon": "^3.0.3",
+    "jsonwebtoken": "^9.0.2",
     "prisma": "^5.10.1",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "nodemon": {
+    "watch": [
+      "back-end/*",
+      "back-end/**/*",
+      "front-end/*",
+      "front-end/**/*"
+    ],
+    "ext": "js,jsx,ts,tsx,json"
   }
 }
