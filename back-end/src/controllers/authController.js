@@ -48,6 +48,10 @@ export const createUser = async (req, res) => {
 
 export const signIn = async (req, res) => {
   const { email, password } = req.body;
+  // console.log(req.body);
+  // console.log(email);
+  // console.log(password);
+  // console.log("Attempting to sign a user in.");
   try {
     // const prisma = new PrismaClient();
     const isValidUser = await prisma.user.findUnique({
@@ -56,13 +60,18 @@ export const signIn = async (req, res) => {
       },
     });
     if (!isValidUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found." });
     } else {
       const userName = isValidUser.name;
       const storedPassword = isValidUser.password;
+      // console.log(storedPassword);
+      // console.log(password + ": Type: " + typeof password);
       const isPasswordValid = authenticateUser(password, storedPassword);
+      // console.log("Password valid: " + isPasswordValid);
       if (!isPasswordValid) {
-        return res.status(401).json({ message: "Invalid password" });
+        return res
+          .status(401)
+          .json({ message: "Incorrect email or password, please try again." });
       } else {
         const authToken = generateAccessToken(email);
         return res
