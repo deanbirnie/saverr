@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start-backend": "nodemon --verbose index.js"
+    "start-backend": "nodemon -L index.js"
   },
   "keywords": [],
   "author": "",

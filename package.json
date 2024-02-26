@@ -5,7 +5,7 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --verbose ./back-end/index.js"
+    "dev": "nodemon -L ./back-end/index.js"
   },
   "repository": {
     "type": "git",
