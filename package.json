@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --verbose ./back-end/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,19 @@
     "url": "https://github.com/deanbirnie/saverr/issues"
   },
   "homepage": "https://github.com/deanbirnie/saverr#readme",
+  "nodemon": {
+    "watch": [
+      "back-end/*",
+      "back-end/**/*",
+      "front-end/*",
+      "front-end/**/*"
+    ],
+    "ext": "js,jsx,ts,tsx,json"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
   "dependencies": {
+    "cookie-parser": "^1.4.6"
   }
 }
