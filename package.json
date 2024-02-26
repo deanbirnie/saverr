@@ -5,7 +5,8 @@
   "main": "",
   "type": "module",
   "scripts": {
-    "dev": "nodemon -L ./back-end/index.js"
+    "back": "cd back-end && nodemon -L index.js",
+    "front": "cd front-end && npm run dev"
   },
   "repository": {
     "type": "git",
