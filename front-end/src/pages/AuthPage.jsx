@@ -8,6 +8,7 @@ export default function AuthPage({ signedIn, setSignedIn }) {
       {!signedIn && (
         <AuthComponent signedIn={signedIn} setSignedIn={setSignedIn} />
       )}
+      <div>Auth Page</div>
     </>
   );
 }

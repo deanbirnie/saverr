@@ -4,11 +4,12 @@ import AuthPage from "./pages/AuthPage";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import AppPage from "./pages/AppPage";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Footer from "./components/Footer";
+import ProfilePage from "./pages/ProfilePage";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 export default function App() {
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -48,6 +49,7 @@ export default function App() {
         </Route>
         <Route element={<PrivateRoute signedIn={signedIn} />}>
           <Route path="/" element={<AppPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
       <Footer />
