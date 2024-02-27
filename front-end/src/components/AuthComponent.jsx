@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-export default function AuthComponent() {
+export default function AuthComponent({ signedIn, setSignedIn }) {
   const [formData, setFormData] = useState({});
   const [errMsg, setErrMsg] = useState(null);
   const navigate = useNavigate();
@@ -25,15 +26,18 @@ export default function AuthComponent() {
         const data = await res.json();
         // console.log(data);
         if (data) {
+          setSignedIn(true);
           console.log("Navigating to /");
           navigate("/");
         }
       } else {
         const errData = await res.json();
         setErrMsg(errData.message);
+        setSignedIn(false);
       }
     } catch (err) {
       console.error(err);
+      setSignedIn(false);
     }
   };
 
@@ -69,3 +73,8 @@ export default function AuthComponent() {
     </>
   );
 }
+
+AuthComponent.propTypes = {
+  signedIn: PropTypes.bool.isRequired,
+  setSignedIn: PropTypes.func.isRequired,
+};

@@ -40,11 +40,7 @@ export default function App() {
     <BrowserRouter>
       <Header signedIn={signedIn} />
       <Routes>
-        <Route
-          element={
-            <AuthenticatedRoute signedIn={signedIn} setSigned={setSignedIn} />
-          }
-        >
+        <Route element={<AuthenticatedRoute signedIn={signedIn} />}>
           <Route
             path="/auth"
             element={<AuthPage signedIn={signedIn} setSignedIn={setSignedIn} />}
