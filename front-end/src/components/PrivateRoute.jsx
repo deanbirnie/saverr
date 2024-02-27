@@ -10,5 +10,5 @@ export default function PrivateRoute({ signedIn, ...props }) {
 }
 
 PrivateRoute.propTypes = {
-  signedIn: PropTypes.bool.isRequired,
+  signedIn: PropTypes.bool,
 };

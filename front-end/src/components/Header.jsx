@@ -51,6 +51,6 @@ export default function Header({ signedIn, setSignedIn }) {
 }
 
 Header.propTypes = {
-  signedIn: PropTypes.bool.isRequired,
+  signedIn: PropTypes.bool,
   setSignedIn: PropTypes.func,
 };

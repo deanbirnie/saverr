@@ -10,5 +10,5 @@ export default function AuthenticatedRoute({ signedIn, ...props }) {
 }
 
 AuthenticatedRoute.propTypes = {
-  signedIn: PropTypes.bool.isRequired,
+  signedIn: PropTypes.bool,
 };
