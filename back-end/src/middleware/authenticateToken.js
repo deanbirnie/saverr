@@ -7,7 +7,7 @@ export const authenticateToken = (req, res, next) => {
   const token = req.cookies.authToken;
 
   if (token === null) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized, please login." });
   }
 
   jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (err, user) => {

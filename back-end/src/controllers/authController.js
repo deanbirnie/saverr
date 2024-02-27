@@ -235,9 +235,11 @@ export const getUserInfo = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     } else {
+      const userName = user.name;
+      const userEmail = user.email;
       return res
         .status(200)
-        .json({ user: { email: user.email, name: user.name } });
+        .json({ user: { email: userEmail, name: userName } });
     }
   } catch (err) {
     console.error(err.message);

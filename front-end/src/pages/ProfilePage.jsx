@@ -1,94 +1,52 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import UpdateEmail from "../components/UpdateEmail.jsx";
+import UpdateName from "../components/UpdateName.jsx";
+import UpdatePassword from "../components/UpdatePassword.jsx";
 
 export default function ProfilePage() {
-  const [formData, setFormData] = useState({});
-  const userEmailRef = useRef("Email address");
-  const userNameRef = useRef("Name");
+  const [toggleEditEmail, setToggleEditEmail] = useState(false);
+  const [toggleEditName, setToggleEditName] = useState(false);
+  const [toggleEditPassword, setToggleEditPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+  const handleToggleEditEmail = () => {
+    setToggleEditEmail(!toggleEditEmail);
   };
 
-  let userName = "Name";
-  let userEmail = "Email address";
+  const handleToggleEditName = () => {
+    setToggleEditName(!toggleEditName);
+  };
 
-  useEffect(() => {
-    const placeholders = async () => {
-      try {
-        const res = await fetch("/api/auth/get-userinfo", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (res.ok) {
-          userEmailRef.current = res.user.email;
-          userNameRef.current = res.user.name;
-        } else {
-          console.error("Unable to retrieve placeholders");
-        }
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-    placeholders();
-  }, []);
-
-  const handleUpdateEmail = () => {};
-
-  const handleUpdateName = () => {};
-
-  const handleUpdatePassword = () => {};
+  const handleToggleEditPassword = () => {
+    setToggleEditPassword(!toggleEditPassword);
+  };
 
   return (
-    <div className="mt-5 flex flex-col items-center">
-      <h1 className="uppercase font-bold text-3xl">Profile Page</h1>
-      <h3 className="uppercase font-semibold text-xl mt-5">User Section</h3>
-      <form className="mt-5 flex flex-col gap-2" onSubmit={handleUpdateEmail}>
-        <label>Your email address:</label>
-        <input
-          type="email"
-          placeholder={userEmailRef.current}
-          className="border p-3 rounded-lg"
-          id="email"
-          onChange={handleChange}
-        />
-        <button className="uppercase p-3 bg-green-600 rounded-lg font-semibold">
-          Update Email
-        </button>
-      </form>
-      <form
-        className="mt-5 flex flex-col gap-2 w-100"
-        onSubmit={handleUpdateName}
+    <div className="flex flex-col mx-auto mt-10 max-w-lg">
+      <h1 className="mx-auto m-5 font-bold text-3xl uppercase">Settings</h1>
+      <button
+        type="button"
+        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        onClick={handleToggleEditEmail}
       >
-        <label>Your name:</label>
-        <input
-          type="text"
-          placeholder={userNameRef.current}
-          className="border p-3 rounded-lg"
-          id="name"
-          onChange={handleChange}
-        />
-        <button className="uppercase p-3 bg-green-600 rounded-lg font-semibold">
-          Update Name
-        </button>
-      </form>
-      <form
-        className="mt-5 flex flex-col gap-2"
-        onSubmit={handleUpdatePassword}
+        Edit Email
+      </button>
+      {toggleEditEmail && <UpdateEmail />}
+      <button
+        type="button"
+        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        onClick={handleToggleEditName}
       >
-        <label>Update your password here:</label>
-        <input
-          type="password"
-          placeholder="New Password"
-          className="border p-3 rounded-lg"
-          id="newPassword"
-          onChange={handleChange}
-        />
-        <button className="uppercase p-3 bg-green-600 rounded-lg font-semibold">
-          Update Password
-        </button>
-      </form>
+        Edit Name
+      </button>
+      {toggleEditName && <UpdateName />}
+      <button
+        type="button"
+        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        onClick={handleToggleEditPassword}
+      >
+        Change Password
+      </button>
+      {toggleEditPassword && <UpdatePassword />}
     </div>
   );
 }
