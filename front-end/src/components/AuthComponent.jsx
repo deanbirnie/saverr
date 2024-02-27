@@ -47,7 +47,7 @@ export default function AuthComponent({ signedIn, setSignedIn }) {
         <h1 className="text-3xl text-center font-semibold mt-5">Sign In</h1>
         <form className="flex flex-col gap-4 my-3" onSubmit={handleSubmit}>
           <input
-            type="text"
+            type="email"
             placeholder="Email Address"
             className="border p-3 rounded-lg"
             id="email"
