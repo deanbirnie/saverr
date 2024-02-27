@@ -223,3 +223,23 @@ export const updateUserPassword = async (req, res) => {
 export const authCheck = async (req, res) => {
   return res.status(200).json({ message: "User authenticated with cookie." });
 };
+
+export const getUserInfo = async (req, res) => {
+  const email = req.user;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    } else {
+      return res
+        .status(200)
+        .json({ user: { email: user.email, name: user.name } });
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+};
