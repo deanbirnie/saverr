@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AuthModal from "../components/AuthModal";
+import AuthComponent from "../components/AuthComponent";
 
 export default function AuthPage({ signedIn }) {
   return (
     <>
-      <div>{signedIn ? "Signed In" : <AuthModal />}</div>
+      <div>{signedIn ? "Signed In" : <AuthComponent />}</div>
     </>
   );
 }
