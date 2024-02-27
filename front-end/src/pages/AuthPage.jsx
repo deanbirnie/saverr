@@ -13,6 +13,6 @@ export default function AuthPage({ signedIn, setSignedIn }) {
 }
 
 AuthPage.propTypes = {
-  signedIn: PropTypes.bool.isRequired,
+  signedIn: PropTypes.bool,
   setSignedIn: PropTypes.func.isRequired,
 };

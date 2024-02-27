@@ -11,7 +11,7 @@ export default function App() {
   const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
-    const checkkAuthStatus = async () => {
+    const checkAuthStatus = async () => {
       try {
         const res = await fetch("/api/auth/check-auth", {
           method: "GET",
@@ -33,12 +33,12 @@ export default function App() {
         setSignedIn(false);
       }
     };
-    checkkAuthStatus();
+    checkAuthStatus();
   }, []);
 
   return (
     <BrowserRouter>
-      <Header signedIn={signedIn} />
+      <Header signedIn={signedIn} setSignedIn={setSignedIn} />
       <Routes>
         <Route element={<AuthenticatedRoute signedIn={signedIn} />}>
           <Route

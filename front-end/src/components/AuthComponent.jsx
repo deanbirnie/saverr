@@ -27,7 +27,7 @@ export default function AuthComponent({ signedIn, setSignedIn }) {
         // console.log(data);
         if (data) {
           setSignedIn(true);
-          console.log("Navigating to /");
+          // console.log("Navigating to /");
           navigate("/");
         }
       } else {
@@ -75,6 +75,6 @@ export default function AuthComponent({ signedIn, setSignedIn }) {
 }
 
 AuthComponent.propTypes = {
-  signedIn: PropTypes.bool.isRequired,
+  signedIn: PropTypes.bool,
   setSignedIn: PropTypes.func.isRequired,
 };

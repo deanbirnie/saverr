@@ -1,12 +1,38 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export default function Header({ signedIn }) {
+export default function Header({ signedIn, setSignedIn }) {
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch("/api/auth/signout", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok === true) {
+        setSignedIn(false);
+        navigate("/auth");
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <header>
-      <div className="bg-slate-100 shadow-md p-3 mx-auto flex flex-wrap justify-between">
+      <div className="bg-slate-50 shadow-md p-3 mx-auto flex flex-wrap justify-between">
         <h1 className="font-bold text-sm sm:text-xl">Saverr</h1>
-        <p>{signedIn ? "Signed In" : "Please sign in"}</p>
+        {signedIn && (
+          <button
+            className="bg-red-100 p-2 rounded-lg text-xs font-semibold uppercase hover:opacity-80 max-w-40"
+            onClick={handleSignOut}
+          >
+            Sign Out
+          </button>
+        )}
       </div>
     </header>
   );
@@ -14,4 +40,5 @@ export default function Header({ signedIn }) {
 
 Header.propTypes = {
   signedIn: PropTypes.bool.isRequired,
+  setSignedIn: PropTypes.func,
 };
