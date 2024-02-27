@@ -219,3 +219,7 @@ export const updateUserPassword = async (req, res) => {
     return res.status(500).json({ message: `${err.message}` });
   }
 };
+
+export const authCheck = async (req, res) => {
+  return res.status(200).json({ message: "User authenticated with cookie." });
+};
