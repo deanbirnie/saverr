@@ -43,6 +43,14 @@ export const createUser = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Internal server error, please try again later." });
+  } finally {
+    console.log("Disconnecting client...");
+    try {
+      await prisma.$disconnect();
+      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
   }
 };
 
@@ -87,6 +95,14 @@ export const signIn = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
+  } finally {
+    console.log("Disconnecting client...");
+    try {
+      await prisma.$disconnect();
+      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
   }
 };
 
@@ -141,6 +157,14 @@ export const updateUserEmail = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     return res.status(500).json({ message: `${err.message}` });
+  } finally {
+    console.log("Disconnecting client...");
+    try {
+      await prisma.$disconnect();
+      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
   }
 };
 
@@ -174,6 +198,14 @@ export const updateUserName = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     return res.status(500).json({ message: `${err.message}` });
+  } finally {
+    console.log("Disconnecting client...");
+    try {
+      await prisma.$disconnect();
+      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
   }
 };
 
@@ -217,6 +249,14 @@ export const updateUserPassword = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     return res.status(500).json({ message: `${err.message}` });
+  } finally {
+    console.log("Disconnecting client...");
+    try {
+      await prisma.$disconnect();
+      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
   }
 };
 
@@ -243,5 +283,13 @@ export const getUserInfo = async (req, res) => {
     }
   } catch (err) {
     console.error(err.message);
+  } finally {
+    console.log("Disconnecting client...");
+    try {
+      await prisma.$disconnect();
+      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
   }
 };
