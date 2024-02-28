@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export default function Header({ signedIn, setSignedIn }) {
@@ -28,7 +28,9 @@ export default function Header({ signedIn, setSignedIn }) {
   return (
     <header className="w-full border-b bg-slate-50 shadow-md">
       <div className="p-4 mx-auto max-w-screen-2xl flex items-center justify-between">
-        <h1 className="font-bold text-sm sm:text-xl">Saverr</h1>
+        <Link to="/">
+          <h1 className="font-bold text-sm sm:text-xl">Saverr</h1>
+        </Link>
         {signedIn && (
           <div className="mx-2">
             <button
