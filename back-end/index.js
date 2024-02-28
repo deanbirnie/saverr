@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import { router } from "./src/routes/authRoutes.js";
+import { authRouter } from "./src/routes/authRoutes.js";
+import { appRouter } from "./src/routes/appRoutes";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -15,7 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Authentication API
-app.use("/api/auth", router);
+app.use("/api/auth", authRouter);
+
+// Application API
+app.use("/api/app", appRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

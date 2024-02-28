@@ -11,13 +11,13 @@ import {
 } from "../controllers/authController.js";
 import { authenticateToken } from "../middleware/authenticateToken.js";
 
-export const router = express.Router();
+export const authRouter = express.Router();
 
-router.post("/create-user", createUser);
-router.post("/signin", signIn);
-router.get("/signout", authenticateToken, signOut);
-router.post("/update-user-email", authenticateToken, updateUserEmail);
-router.post("/update-user-name", authenticateToken, updateUserName);
-router.post("/update-user-password", authenticateToken, updateUserPassword);
-router.get("/check-auth", authenticateToken, authCheck);
-router.get("/get-userinfo", authenticateToken, getUserInfo);
+authRouter.post("/create-user", createUser);
+authRouter.post("/signin", signIn);
+authRouter.get("/signout", authenticateToken, signOut);
+authRouter.post("/update-user-email", authenticateToken, updateUserEmail);
+authRouter.post("/update-user-name", authenticateToken, updateUserName);
+authRouter.post("/update-user-password", authenticateToken, updateUserPassword);
+authRouter.get("/check-auth", authenticateToken, authCheck);
+authRouter.get("/get-userinfo", authenticateToken, getUserInfo);
