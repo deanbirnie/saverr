@@ -7,6 +7,7 @@ import AppPage from "./pages/AppPage";
 import Footer from "./components/Footer";
 import ProfilePage from "./pages/ProfilePage";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import BudgetPage from "./pages/BudgetPage";
 
 export default function App() {
   const [signedIn, setSignedIn] = useState(null);
@@ -50,6 +51,7 @@ export default function App() {
         <Route element={<PrivateRoute signedIn={signedIn} />}>
           <Route path="/" element={<AppPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/budget/:budgetId" element={<BudgetPage />} />
         </Route>
       </Routes>
       <Footer />

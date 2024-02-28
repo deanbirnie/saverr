@@ -26,8 +26,8 @@ export default function Header({ signedIn, setSignedIn }) {
     }
   };
   return (
-    <header>
-      <div className="bg-slate-50 shadow-md p-3 mx-auto flex flex-wrap justify-between">
+    <header className="w-full border-b bg-slate-50 shadow-md">
+      <div className="p-4 mx-auto max-w-screen-2xl flex items-center justify-between">
         <h1 className="font-bold text-sm sm:text-xl">Saverr</h1>
         {signedIn && (
           <div className="mx-2">
