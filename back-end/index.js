@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { authRouter } from "./src/routes/authRoutes.js";
-import { appRouter } from "./src/routes/appRoutes";
+import { appRouter } from "./src/routes/appRoutes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
