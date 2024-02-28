@@ -47,6 +47,8 @@ export default function AppPage() {
     navigate(`/budget/${budgetId}`);
   };
 
+  console.log(budgetIds);
+
   return (
     <div className="mx-auto text-center m-10">
       <div className="mx-auto max-w-screen-2xl p-4 flex items-center justify-between">
@@ -58,10 +60,10 @@ export default function AppPage() {
           New Budget
         </button>
       </div>
-      {budgetIds.map((id) => (
-        <div key={id}>
-          <a href="#" onClick={() => handleNavBudget(id)}>
-            <BudgetCard id={id} />
+      {budgetIds.map((budget) => (
+        <div key={budget.id}>
+          <a href="#" onClick={() => handleNavBudget(budget.id)}>
+            <BudgetCard id={budget.id} />
           </a>
         </div>
       ))}
