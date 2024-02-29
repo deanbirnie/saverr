@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import { v4 as uuidv4 } from "uuid";
 
 const prisma = new PrismaClient();
 
 export const getBudgets = async (req, res) => {
-  const userEmail = req.user;
+  const userId = req.user;
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: userEmail,
+        id: userId,
       },
     });
     const allBudgets = await prisma.budget.findMany({
@@ -34,11 +35,11 @@ export const getBudgets = async (req, res) => {
 };
 
 export const createBudget = async (req, res) => {
-  const userEmail = req.user;
+  const userId = req.user;
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: userEmail,
+        id: userId,
       },
     });
     if (!user) {
@@ -46,9 +47,40 @@ export const createBudget = async (req, res) => {
     }
     const newBudget = await prisma.budget.create({
       data: {
-        userId: user.id,
+        id: uuidv4(),
         month: req.body.month,
         year: req.body.year,
+        userId: user.id,
+      },
+    });
+    const defaultIncome = await prisma.income.create({
+      data: {
+        id: uuidv4(),
+        name: "Income",
+        budgetId: newBudget.id,
+      },
+    });
+    const defaultIncomeItem = await prisma.incomeItem.create({
+      data: {
+        id: uuidv4(),
+        name: "Salary",
+        incomeId: defaultIncome.id,
+        budgetId: newBudget.id,
+      },
+    });
+    const defaultExpense = await prisma.expenseCategory.create({
+      data: {
+        id: uuidv4(),
+        name: "Expenses",
+        budgetId: newBudget.id,
+      },
+    });
+    const defaultExpenseItem = await prisma.expenseItem.create({
+      data: {
+        id: uuidv4(),
+        name: "Rent",
+        expenseCategoryId: defaultExpense.id,
+        budgetId: newBudget.id,
       },
     });
     if (newBudget.length === 0) {
@@ -70,27 +102,37 @@ export const createBudget = async (req, res) => {
 };
 
 export const getBudgetInfo = async (req, res) => {
-  const userEmail = req.user;
-  const budgetId = parseInt(req.query.id, 10);
+  const userId = req.user;
+  const budgetId = req.query.id;
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: userEmail,
+        id: userId,
       },
     });
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
-    if (isNaN(budgetId)) {
-      return res.status(400).json({ message: "Invalid budget ID." });
-    }
     const budget = await prisma.budget.findUnique({
       where: {
         id: budgetId,
+        userId: user.id,
+      },
+      include: {
+        income: {
+          include: {
+            incomeItems: true,
+          },
+        },
+        expenseCategories: {
+          include: {
+            expenseItems: true,
+          },
+        },
       },
     });
     if (!budget) {
-      return res.status(404).json({ message: "Budget not found." });
+      return res.status(404).json({ error: "Budget not found." });
     }
     return res.status(200).json(budget);
   } catch (err) {

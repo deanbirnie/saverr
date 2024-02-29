@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { v4 as uuidv4 } from "uuid";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import { generateAccessToken } from "../middleware/generateToken.js";
@@ -23,16 +24,56 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ message: "User found, already exists" });
     } else {
       const hashedPassword = bcrypt.hashSync(password, 12);
-      console.log(hashedPassword);
       const newUser = await prisma.user.create({
         data: {
+          id: uuidv4(),
           email: email,
           name: name,
           password: hashedPassword,
         },
       });
+      const newBudget = await prisma.budget.create({
+        data: {
+          id: uuidv4(),
+          month: "Change me!",
+          year: new Date().getFullYear().toString(),
+          userId: newUser.id,
+        },
+      });
+      const defaultIncome = await prisma.income.create({
+        data: {
+          id: uuidv4(),
+          name: "Income",
+          budgetId: newBudget.id,
+        },
+      });
+      const defaultIncomeItem = await prisma.incomeItem.create({
+        data: {
+          id: uuidv4(),
+          name: "Salary",
+          incomeId: defaultIncome.id,
+          budgetId: newBudget.id,
+        },
+      });
+      const defaultExpense = await prisma.expenseCategory.create({
+        data: {
+          id: uuidv4(),
+          name: "Expenses",
+          budgetId: newBudget.id,
+        },
+      });
+      const defaultExpenseItem = await prisma.expenseItem.create({
+        data: {
+          id: uuidv4(),
+          name: "Rent",
+          expenseCategoryId: defaultExpense.id,
+          budgetId: newBudget.id,
+        },
+      });
+
       return res.status(200).json({
         user: {
+          id: newUser.id,
           email: newUser.email,
           name: newUser.name,
         },
@@ -81,16 +122,11 @@ export const signIn = async (req, res) => {
           .status(401)
           .json({ message: "Incorrect email or password, please try again." });
       } else {
-        const authToken = generateAccessToken(email);
+        const authToken = generateAccessToken(isValidUser.id);
         return res
           .cookie("authToken", authToken, { httpOnly: true })
           .status(200)
-          .json({
-            user: {
-              email: email,
-              name: userName,
-            },
-          });
+          .json({ message: "Sign in successful." });
       }
     }
   } catch (error) {
@@ -107,10 +143,10 @@ export const signIn = async (req, res) => {
 };
 
 export const signOut = (req, res) => {
-  // authenticateToken middleware sets req.user to the user's email for identification
-  const email = req.user;
+  // authenticateToken middleware sets req.user to the user's ID for identification
+  const Id = req.user;
 
-  console.log("Signing out user: ", email);
+  console.log("Signing out user: ", Id);
   return res
     .clearCookie("authToken")
     .status(200)
@@ -118,8 +154,8 @@ export const signOut = (req, res) => {
 };
 
 export const updateUserEmail = async (req, res) => {
-  // authenticateToken middleware sets req.user to the user's email for identification
-  const email = req.user;
+  // authenticateToken middleware sets req.user to the user's ID for identification
+  const Id = req.user;
   const newEmail = req.body.email;
   try {
     const isNewEmailTaken = await prisma.user.findUnique({
@@ -128,11 +164,11 @@ export const updateUserEmail = async (req, res) => {
       },
     });
     if (isNewEmailTaken) {
-      return res.status(400).json({ message: "Email is already taken" });
+      return res.status(400).json({ message: "Email is already registered." });
     } else {
       const user = await prisma.user.findUnique({
         where: {
-          email: email,
+          id: Id,
         },
       });
       const userName = user.name;
@@ -141,17 +177,17 @@ export const updateUserEmail = async (req, res) => {
       } else {
         const updatedUserEmail = await prisma.user.update({
           where: {
-            email: email,
+            email: user.email,
           },
           data: {
             email: newEmail,
           },
         });
-        const authToken = generateAccessToken(updatedUserEmail.email);
+        const authToken = generateAccessToken(updatedUserEmail.id);
         return res
           .cookie("authToken", authToken, { httpOnly: true })
           .status(200)
-          .json({ user: { email: updatedUserEmail.email, name: userName } });
+          .json({ message: "Email updated successfully." });
       }
     }
   } catch (err) {
@@ -169,31 +205,32 @@ export const updateUserEmail = async (req, res) => {
 };
 
 export const updateUserName = async (req, res) => {
-  // authenticateToken middleware sets req.user to the user's email for identification
-  const email = req.user;
+  // authenticateToken middleware sets req.user to the user's ID for identification
+  const Id = req.user;
   const newName = req.body.name;
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: email,
+        id: Id,
       },
     });
+    if (user.name === newName) {
+      return res.status(400).json({ message: "Name is already set." });
+    }
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     } else {
       const updatedUserName = await prisma.user.update({
         where: {
-          email: email,
+          id: user.id,
         },
         data: {
           name: newName,
         },
       });
-      const authToken = generateAccessToken(email);
       return res
-        .cookie("authToken", authToken, { httpOnly: true })
         .status(200)
-        .json({ user: { email: email, name: updatedUserName.name } });
+        .json({ message: "User name updated successfully." });
     }
   } catch (err) {
     console.error(err.message);
@@ -210,14 +247,14 @@ export const updateUserName = async (req, res) => {
 };
 
 export const updateUserPassword = async (req, res) => {
-  // authenticateToken middleware sets req.user to the user's email for identification
-  const email = req.user;
+  // authenticateToken middleware sets req.user to the user's ID for identification
+  const Id = req.user;
   const currentPassword = req.body.password;
   const newPassword = req.body.newPassword;
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: email,
+        id: Id,
       },
     });
     if (!user) {
@@ -233,17 +270,15 @@ export const updateUserPassword = async (req, res) => {
         const newPasswordHashed = bcrypt.hashSync(newPassword, 12);
         const updatedUserPassword = await prisma.user.update({
           where: {
-            email: email,
+            id: user.id,
           },
           data: {
             password: newPasswordHashed,
           },
         });
-        const authToken = generateAccessToken(email);
         return res
-          .cookie("authToken", authToken, { httpOnly: true })
           .status(200)
-          .json({ user: { email: email, name: user.name } });
+          .json({ message: "Password successfully updated." });
       }
     }
   } catch (err) {
@@ -265,21 +300,18 @@ export const authCheck = async (req, res) => {
 };
 
 export const getUserInfo = async (req, res) => {
-  const email = req.user;
+  const Id = req.user;
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: email,
+        id: Id,
       },
     });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     } else {
-      const userName = user.name;
-      const userEmail = user.email;
-      return res
-        .status(200)
-        .json({ user: { email: userEmail, name: userName } });
+      const { password, ...userInfo } = user;
+      return res.status(200).json(userInfo);
     }
   } catch (err) {
     console.error(err.message);
