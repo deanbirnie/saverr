@@ -4,7 +4,6 @@ import AuthPage from "./pages/AuthPage";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import AppPage from "./pages/AppPage";
-import Footer from "./components/Footer";
 import ProfilePage from "./pages/ProfilePage";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import BudgetPage from "./pages/BudgetPage";
@@ -54,7 +53,6 @@ export default function App() {
           <Route path="/budget/:budgetId" element={<BudgetPage />} />
         </Route>
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }

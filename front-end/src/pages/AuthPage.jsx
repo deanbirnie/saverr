@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AuthComponent from "../components/AuthComponent";
+import Footer from "../components/Footer";
 
 export default function AuthPage({ signedIn, setSignedIn }) {
   return (
@@ -8,7 +9,7 @@ export default function AuthPage({ signedIn, setSignedIn }) {
       {!signedIn && (
         <AuthComponent signedIn={signedIn} setSignedIn={setSignedIn} />
       )}
-      <div>Auth Page</div>
+      <Footer />
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UpdateEmail from "../components/UpdateEmail.jsx";
 import UpdateName from "../components/UpdateName.jsx";
 import UpdatePassword from "../components/UpdatePassword.jsx";
+import Footer from "../components/Footer.jsx";
 
 export default function ProfilePage() {
   const [toggleEditEmail, setToggleEditEmail] = useState(false);
@@ -47,6 +48,7 @@ export default function ProfilePage() {
         Change Password
       </button>
       {toggleEditPassword && <UpdatePassword />}
+      <Footer />
     </div>
   );
 }

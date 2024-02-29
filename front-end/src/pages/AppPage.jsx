@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BudgetCard from "../components/BudgetCard";
+import Footer from "../components/Footer";
 
 export default function AppPage() {
   const [budgetIds, setBudgetIds] = useState(null);
@@ -71,6 +72,7 @@ export default function AppPage() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
