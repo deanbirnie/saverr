@@ -26,6 +26,24 @@ export default function BudgetCard({ id }) {
     fetchBudget();
   }, [id]);
 
+  const handleDeleteBudget = async () => {
+    try {
+      const res = await fetch(`/api/app/delete-budget?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setBudgetData(data);
+        window.location.reload(false);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   if (budgetData === null) {
     return <div className="m-14 font-semibold text-2xl">Loading data...</div>;
   }
@@ -56,7 +74,10 @@ export default function BudgetCard({ id }) {
         >
           View
         </button>
-        <button className="rounded p-3 border bg-red-300 mt-5 uppercase font-semibold w-full sm:w-20 hover:opacity-80">
+        <button
+          onClick={() => handleDeleteBudget(id)}
+          className="rounded p-3 border bg-red-300 mt-5 uppercase font-semibold w-full sm:w-20 hover:opacity-80"
+        >
           Delete
         </button>
       </div>
