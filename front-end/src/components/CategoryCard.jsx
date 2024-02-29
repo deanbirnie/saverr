@@ -12,7 +12,7 @@ export default function CategoryCard({ cardNumber }) {
   return (
     <a
       href="#"
-      className="flex flex-col max-w-5xl border-slate-500 bg-white rounded-lg shadow hover:opacity-80 p-5 m-2"
+      className="border-slate-500 bg-white rounded-lg shadow-md p-5 mx-10"
       onClick={handleToggleExpand}
     >
       <div>

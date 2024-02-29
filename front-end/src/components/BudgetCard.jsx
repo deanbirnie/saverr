@@ -39,7 +39,7 @@ export default function BudgetCard({ id }) {
   };
 
   return (
-    <div className="flex flex-col border rounded-lg p-10 bg-slate-50 hover:bg-slate-200">
+    <div className="flex flex-col border rounded-lg p-10 bg-slate-50 hover:bg-slate-200 hover:shadow-md hover:scale-110">
       <h1 className="font-semibold text-lg me-auto">Budget:</h1>
       <div className="flex justify-between mt-4">
         <p className="font-semibold me-auto">Month:</p>
