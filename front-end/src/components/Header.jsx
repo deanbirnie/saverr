@@ -34,13 +34,13 @@ export default function Header({ signedIn, setSignedIn }) {
         {signedIn && (
           <div className="mx-2">
             <button
-              className="bg-green-100 border p-2 rounded-lg text-xs font-semibold uppercase hover:opacity-80 max-w-40 mx-2"
+              className="bg-green-200 w-auto border p-2 rounded-lg text-xs font-semibold uppercase hover:opacity-80 mx-2 sm:w-20"
               onClick={handleNavProfile}
             >
               Profile
             </button>
             <button
-              className="bg-red-100 border p-2 rounded-lg text-xs font-semibold uppercase hover:opacity-80 max-w-40 mx-2"
+              className="bg-red-200 w-auto border p-2 rounded-lg text-xs font-semibold uppercase hover:opacity-80 mx-2 sm:w-20"
               onClick={handleSignOut}
             >
               Sign Out
