@@ -15,8 +15,8 @@ export default function BudgetPage() {
 
   useEffect(() => {
     const fetchBudgetData = () => {
-      setIncome(10000);
-      setExpenses(110000);
+      setIncome(0);
+      setExpenses(0);
     };
     fetchBudgetData();
   }, []);
