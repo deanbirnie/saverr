@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ItemsComponent from "./ItemsComponent";
 
-export default function CategoryCard({ category }) {
+export default function IncomeCard({ category }) {
   const [toggleExpand, setToggleExpand] = useState(false);
 
   const handleToggleExpand = () => {
@@ -19,7 +19,7 @@ export default function CategoryCard({ category }) {
         {!toggleExpand ? (
           <p>Click to expand...</p>
         ) : (
-          <ItemsComponent itemsList={category.expenseItems} />
+          <ItemsComponent itemsList={category.incomeItems} />
         )}
       </div>
     </a>

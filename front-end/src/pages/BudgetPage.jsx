@@ -3,6 +3,7 @@ import CategoryCard from "../components/CategoryCard";
 import BudgetRemainingCard from "../components/BudgetRemainingCard";
 import AddCategoryModal from "../components/AddCategoryModal";
 import Footer from "../components/Footer";
+import { useParams } from "react-router-dom";
 
 export default function BudgetPage() {
   const [income, setIncome] = useState(0);
@@ -10,16 +11,57 @@ export default function BudgetPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddCatModal, setShowAddCatModal] = useState(false);
   const [showFloatingButtons, setShowFloatingButtons] = useState(true);
-  const cardCount = 5;
-  const cardNumbers = Array.from({ length: cardCount }, (_, index) => index);
+  const [budgetData, setBudgetData] = useState(null);
+  const [expenseCategories, setExpenseCategories] = useState([]);
+  const [incomeCategories, setIncomeCategories] = useState([]);
+  const { budgetId } = useParams();
 
   useEffect(() => {
-    const fetchBudgetData = () => {
-      setIncome(0);
-      setExpenses(0);
+    const fetchBudgetData = async () => {
+      try {
+        const res = await fetch(`/api/app/get-budget-info?id=${budgetId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data) {
+            setBudgetData(data);
+            setExpenseCategories(data.expenseCategories);
+            setIncomeCategories(data.income);
+            // Callculate total income
+            const totalIncome = data.income.reduce((acc, incomeCategory) => {
+              const categoryTotal = incomeCategory.incomeItems
+                .map((item) => item.value)
+                .reduce((a, b) => a + b, 0);
+
+              return acc + categoryTotal;
+            }, 0);
+            setIncome(totalIncome);
+
+            // Calculate total expenses
+            const totalExpenses = data.expenseCategories.reduce(
+              (acc, expenseCategory) => {
+                const categoryTotal = expenseCategory.expenseItems
+                  .map((item) => item.value)
+                  .reduce((a, b) => a + b, 0);
+
+                return acc + categoryTotal;
+              },
+              0
+            );
+
+            setExpenses(totalExpenses);
+          }
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
     };
     fetchBudgetData();
-  }, []);
+  }, [budgetId]);
 
   const handleModalClose = () => {
     setShowAddCatModal(false);
@@ -29,9 +71,12 @@ export default function BudgetPage() {
   return (
     <div className="grid grid-cols-1 gap-10 max-w-screen-2xl max-h-5 mx-auto pb-16">
       {showAddCatModal && <AddCategoryModal onClose={handleModalClose} />}
-      <BudgetRemainingCard income={income || 0} expenses={expenses || 0} />
-      {cardNumbers.map((cardNumber) => (
-        <CategoryCard key={cardNumber} cardNumber={cardNumber} />
+      <BudgetRemainingCard income={income} expenses={expenses} />
+      {incomeCategories.map((incomeCategory) => (
+        <CategoryCard key={incomeCategory.id} category={incomeCategory} />
+      ))}
+      {expenseCategories.map((expenseCategory) => (
+        <CategoryCard key={expenseCategory.id} category={expenseCategory} />
       ))}
       {showFloatingButtons && (
         <button
