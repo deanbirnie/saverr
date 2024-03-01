@@ -16,9 +16,6 @@ export default function AppPage() {
             "Content-Type": "application/json",
           },
         });
-        if (res.status === 404) {
-          setBudgetIds("default");
-        }
         if (res.status === 200) {
           const data = await res.json();
           if (data) {
@@ -42,24 +39,6 @@ export default function AppPage() {
     window.location.reload(false);
   };
 
-  if (budgetIds === "default") {
-    return (
-      <div className="mx-auto text-center min-h-screen mt-10">
-        {showNewBudgetModal && <NewBudgetModal onClose={handleModalClose} />}
-        <div className="mx-auto max-w-screen-2xl p-4 flex items-center justify-between">
-          <h1>Please create your first budget by clicking on the button.</h1>
-          {!showNewBudgetModal && (
-            <button
-              className="uppercase rounded-lg p-3 bg-green-200 border font-semibold hover:opacity-80"
-              onClick={handleAddBudget}
-            >
-              New Budget
-            </button>
-          )}
-        </div>
-      </div>
-    );
-  }
   if (!budgetIds || !budgetIds.length || budgetIds === null) {
     return <div className="m-14 font-bold text-2xl">Loading data...</div>;
   }

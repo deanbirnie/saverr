@@ -4,27 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function BudgetCard({ id }) {
   const navigate = useNavigate();
-  const [budgetData, setBudgetData] = useState(null);
-
-  useEffect(() => {
-    const fetchBudget = async () => {
-      try {
-        const res = await fetch(`/api/app/get-budget-info?id=${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setBudgetData(data);
-        }
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-    fetchBudget();
-  }, [id]);
+  const [budgetData, setBudgetData] = useState(id);
 
   const handleDeleteBudget = async () => {
     try {
