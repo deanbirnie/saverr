@@ -57,9 +57,8 @@ export default function AppPage() {
           </button>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 max-w-screen-2xl max-h-5 mx-auto pb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 max-w-screen-2xl max-h-5 mx-10 pb-16">
         {budgets.map((budget) => {
-          console.log(budget.id);
           return (
             <div key={budget.id} className="flex-shrink-0 w-full">
               <BudgetCard budget={budget} id={budget.id} />
