@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import NewBudgetModal from "../components/NewBudgetModal";
 
 export default function AppPage() {
-  const [budgetIds, setBudgetIds] = useState(null);
+  const [budgets, setBudgets] = useState(null);
   const [showNewBudgetModal, setShowNewBudgetModal] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function AppPage() {
         if (res.status === 200) {
           const data = await res.json();
           if (data) {
-            setBudgetIds(data);
+            setBudgets(data);
           }
         }
       } catch (err) {
@@ -39,7 +39,7 @@ export default function AppPage() {
     window.location.reload(false);
   };
 
-  if (!budgetIds || !budgetIds.length || budgetIds === null) {
+  if (!budgets || !budgets.length || budgets === null) {
     return <div className="m-14 font-bold text-2xl">Loading data...</div>;
   }
 
@@ -58,11 +58,14 @@ export default function AppPage() {
         )}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 max-w-screen-2xl max-h-5 mx-auto pb-16">
-        {budgetIds.map((budget) => (
-          <div key={budget.id} className="flex-shrink-0 w-full">
-            <BudgetCard id={budget.id} />
-          </div>
-        ))}
+        {budgets.map((budget) => {
+          console.log(budget.id);
+          return (
+            <div key={budget.id} className="flex-shrink-0 w-full">
+              <BudgetCard budget={budget} id={budget.id} />
+            </div>
+          );
+        })}
       </div>
       <Footer />
     </div>

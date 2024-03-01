@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-export default function BudgetCard({ id }) {
+export default function BudgetCard({ id, budget }) {
   const navigate = useNavigate();
-  const [budgetData, setBudgetData] = useState(id);
+  const [budgetData, setBudgetData] = useState(budget);
 
   const handleDeleteBudget = async () => {
     try {
@@ -35,6 +35,8 @@ export default function BudgetCard({ id }) {
   const handleNavBudget = (id) => {
     navigate(`/budget/${id}`);
   };
+
+  console.log(typeof id + " " + id);
 
   return (
     <div className="flex flex-col border rounded-lg p-10 bg-slate-50 hover:bg-slate-200 hover:shadow-md hover:scale-110">
