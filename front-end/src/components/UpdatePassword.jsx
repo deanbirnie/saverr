@@ -58,7 +58,10 @@ export default function UpdatePassword() {
         {updateMsg && (
           <div className="text-red-600 font-semibold">{updateMsg}</div>
         )}
-        <button className="uppercase p-3 bg-green-600 rounded-lg font-semibold">
+        <button
+          type="submit"
+          className="uppercase p-3 bg-green-600 rounded-lg font-semibold"
+        >
           Update Password
         </button>
       </form>
