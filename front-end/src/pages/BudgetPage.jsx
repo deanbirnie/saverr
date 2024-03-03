@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ExpenseCategoryCard from "../components/ExpenseCategoryCard";
-import BudgetRemainingCard from "../components/BudgetRemainingCard";
-import AddCategoryModal from "../components/AddCategoryModal";
+import ExpenseCategoryCard from "../components/cards/ExpenseCategoryCard";
+import BudgetRemainingCard from "../components/cards/BudgetRemainingCard";
+import AddCategoryModal from "../components/modals/AddCategoryModal";
 import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
-import IncomeCategoryCard from "../components/IncomeCategoryCard";
+import IncomeCategoryCard from "../components/cards/IncomeCategoryCard";
 
 export default function BudgetPage() {
   const [income, setIncome] = useState(0);

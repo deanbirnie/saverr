@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import AddItemForm from "./AddItemForm";
+import AddItemForm from "../forms/AddItemForm";
 
 export default function ItemsComponent({ itemsList }) {
-  console.log(typeof itemsList, itemsList);
-
   return (
     <div className="px-5 py-2">
       {itemsList.map((item, index) => {

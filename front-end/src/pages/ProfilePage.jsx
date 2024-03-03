@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import UpdateEmail from "../components/UpdateEmail.jsx";
-import UpdateName from "../components/UpdateName.jsx";
-import UpdatePassword from "../components/UpdatePassword.jsx";
+import UpdateEmail from "../components/forms/UpdateEmail.jsx";
+import UpdateName from "../components/forms/UpdateName.jsx";
+import UpdatePassword from "../components/forms/UpdatePassword.jsx";
 import Footer from "../components/Footer.jsx";
 
 export default function ProfilePage() {

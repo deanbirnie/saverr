@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import Header from "./components/Header";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/routes/PrivateRoute";
 import AppPage from "./pages/AppPage";
 import ProfilePage from "./pages/ProfilePage";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import AuthenticatedRoute from "./components/routes/AuthenticatedRoute";
 import BudgetPage from "./pages/BudgetPage";
 
 export default function App() {

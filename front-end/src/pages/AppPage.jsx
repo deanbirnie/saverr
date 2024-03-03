@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import BudgetCard from "../components/BudgetCard";
+import BudgetCard from "../components/cards/BudgetCard";
 import Footer from "../components/Footer";
-import NewBudgetModal from "../components/NewBudgetModal";
+import NewBudgetModal from "../components/modals/NewBudgetModal";
 
 export default function AppPage() {
   const [budgets, setBudgets] = useState(null);
