@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import ItemsComponent from "./ItemsComponent";
 
 export default function IncomeCategoryCard({ category }) {
@@ -9,19 +10,30 @@ export default function IncomeCategoryCard({ category }) {
   };
 
   return (
-    <a
-      href="#"
-      className="border-slate-500 bg-white rounded-lg shadow-md p-5 mx-10"
-      onClick={handleToggleExpand}
-    >
-      <div>
-        <h1>{category.name}</h1>
-        {!toggleExpand ? (
-          <p>Click to expand...</p>
-        ) : (
-          <ItemsComponent itemsList={category.incomeItems} />
-        )}
+    <div className="border-2 border-slate-50 bg-white rounded-lg shadow-lg p-5 mx-10">
+      <div className="flex justify-between">
+        <h1 className="font-bold underline text-xl">{category.name}</h1>
+        <div className="p-3">
+          {!toggleExpand ? (
+            <BiChevronDown
+              cursor={"pointer"}
+              className="size-5 hover:opacity-80 hover:scale-150"
+              onClick={handleToggleExpand}
+            />
+          ) : (
+            <BiChevronUp
+              cursor={"pointer"}
+              className="size-5 hover:opacity-80 hover:scale-150"
+              onClick={handleToggleExpand}
+            />
+          )}
+        </div>
       </div>
-    </a>
+      {!toggleExpand ? (
+        <p>Click to expand...</p>
+      ) : (
+        <ItemsComponent itemsList={category.incomeItems} />
+      )}
+    </div>
   );
 }
