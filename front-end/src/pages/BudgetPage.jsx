@@ -70,30 +70,35 @@ export default function BudgetPage() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-10 max-w-screen-2xl max-h-5 mx-auto pb-16">
-      {showAddCatModal && <AddCategoryModal onClose={handleModalClose} />}
-      <BudgetRemainingCard income={income} expenses={expenses} />
-      {incomeCategories.map((incomeCategory) => (
-        <IncomeCategoryCard key={incomeCategory.id} category={incomeCategory} />
-      ))}
-      {expenseCategories.map((expenseCategory) => (
-        <ExpenseCategoryCard
-          key={expenseCategory.id}
-          category={expenseCategory}
-        />
-      ))}
-      {showFloatingButtons && (
-        <button
-          className=" fixed bottom-16 right-10 2xl:right-56 uppercase p-3 bg-green-200 border rounded-lg font-semibold hover:opacity-80"
-          onClick={() => {
-            setShowAddCatModal(true);
-            setShowFloatingButtons(false);
-          }}
-        >
-          Add Category
-        </button>
-      )}
+    <>
+      <div className="grid grid-cols-1 gap-10 max-w-screen-2xl max-h-5 mx-auto pb-16">
+        {showAddCatModal && <AddCategoryModal onClose={handleModalClose} />}
+        <BudgetRemainingCard income={income} expenses={expenses} />
+        {incomeCategories.map((incomeCategory) => (
+          <IncomeCategoryCard
+            key={incomeCategory.id}
+            category={incomeCategory}
+          />
+        ))}
+        {expenseCategories.map((expenseCategory) => (
+          <ExpenseCategoryCard
+            key={expenseCategory.id}
+            category={expenseCategory}
+          />
+        ))}
+        {showFloatingButtons && (
+          <button
+            className=" fixed bottom-16 right-10 2xl:right-56 uppercase p-3 bg-green-200 border rounded-lg font-semibold hover:opacity-80"
+            onClick={() => {
+              setShowAddCatModal(true);
+              setShowFloatingButtons(false);
+            }}
+          >
+            Add Category
+          </button>
+        )}
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }

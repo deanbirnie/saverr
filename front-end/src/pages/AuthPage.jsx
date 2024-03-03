@@ -6,9 +6,11 @@ import Footer from "../components/Footer";
 export default function AuthPage({ signedIn, setSignedIn }) {
   return (
     <>
-      {!signedIn && (
-        <AuthComponent signedIn={signedIn} setSignedIn={setSignedIn} />
-      )}
+      <div>
+        {!signedIn && (
+          <AuthComponent signedIn={signedIn} setSignedIn={setSignedIn} />
+        )}
+      </div>
       <Footer />
     </>
   );

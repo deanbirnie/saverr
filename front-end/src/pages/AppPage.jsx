@@ -44,29 +44,31 @@ export default function AppPage() {
   }
 
   return (
-    <div className="mx-auto text-center min-h-screen mt-10">
-      {showNewBudgetModal && <NewBudgetModal onClose={handleModalClose} />}
-      <div className="mx-auto max-w-screen-2xl p-4 flex items-center justify-between">
-        <h1>Select Your budget</h1>
-        {!showNewBudgetModal && (
-          <button
-            className="uppercase rounded-lg p-3 bg-green-200 border font-semibold hover:opacity-80"
-            onClick={handleAddBudget}
-          >
-            New Budget
-          </button>
-        )}
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 max-w-screen-2xl max-h-5 mx-10 pb-16">
-        {budgets.map((budget) => {
-          return (
-            <div key={budget.id} className="flex-shrink-0 w-full">
-              <BudgetCard budget={budget} id={budget.id} />
-            </div>
-          );
-        })}
+    <>
+      <div className="mx-auto text-center min-h-screen mt-10">
+        {showNewBudgetModal && <NewBudgetModal onClose={handleModalClose} />}
+        <div className="mx-auto max-w-screen-2xl p-4 flex items-center justify-between">
+          <h1>Select Your budget</h1>
+          {!showNewBudgetModal && (
+            <button
+              className="uppercase rounded-lg p-3 bg-green-200 border font-semibold hover:opacity-80"
+              onClick={handleAddBudget}
+            >
+              New Budget
+            </button>
+          )}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 max-w-screen-2xl max-h-5 mx-10 pb-16">
+          {budgets.map((budget) => {
+            return (
+              <div key={budget.id} className="flex-shrink-0 w-full">
+                <BudgetCard budget={budget} id={budget.id} />
+              </div>
+            );
+          })}
+        </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
