@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CategoryCard from "../components/CategoryCard";
+import ExpenseCategoryCard from "../components/ExpenseCategoryCard";
 import BudgetRemainingCard from "../components/BudgetRemainingCard";
 import AddCategoryModal from "../components/AddCategoryModal";
 import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
+import IncomeCategoryCard from "../components/IncomeCategoryCard";
 
 export default function BudgetPage() {
   const [income, setIncome] = useState(0);
@@ -73,10 +74,13 @@ export default function BudgetPage() {
       {showAddCatModal && <AddCategoryModal onClose={handleModalClose} />}
       <BudgetRemainingCard income={income} expenses={expenses} />
       {incomeCategories.map((incomeCategory) => (
-        <CategoryCard key={incomeCategory.id} category={incomeCategory} />
+        <IncomeCategoryCard key={incomeCategory.id} category={incomeCategory} />
       ))}
       {expenseCategories.map((expenseCategory) => (
-        <CategoryCard key={expenseCategory.id} category={expenseCategory} />
+        <ExpenseCategoryCard
+          key={expenseCategory.id}
+          category={expenseCategory}
+        />
       ))}
       {showFloatingButtons && (
         <button

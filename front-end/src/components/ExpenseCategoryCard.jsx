@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ItemsComponent from "./ItemsComponent";
 
-export default function CategoryCard({ category }) {
+export default function ExpenseCategoryCard({ category }) {
   const [toggleExpand, setToggleExpand] = useState(false);
 
   const handleToggleExpand = () => {
