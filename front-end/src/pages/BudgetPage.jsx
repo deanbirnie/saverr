@@ -32,7 +32,7 @@ export default function BudgetPage() {
             setBudgetData(data);
             setExpenseCategories(data.expenseCategories);
             setIncomeCategories(data.income);
-            // Callculate total income
+            // Calculate total income
             const totalIncome = data.income.reduce((acc, incomeCategory) => {
               const categoryTotal = incomeCategory.incomeItems
                 .map((item) => item.value)

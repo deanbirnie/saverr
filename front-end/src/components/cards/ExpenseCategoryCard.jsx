@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import ItemsComponent from "./ItemsComponent";
+import ExpenseItemsComponent from "./ExpenseItemsComponent";
+import PropTypes from "prop-types";
 
 export default function ExpenseCategoryCard({ category }) {
   const [toggleExpand, setToggleExpand] = useState(false);
@@ -32,7 +33,7 @@ export default function ExpenseCategoryCard({ category }) {
       {!toggleExpand ? (
         <p>Click to expand...</p>
       ) : (
-        <ItemsComponent itemsList={category.expenseItems} />
+        <ExpenseItemsComponent categoryObj={category} />
       )}
     </div>
   );

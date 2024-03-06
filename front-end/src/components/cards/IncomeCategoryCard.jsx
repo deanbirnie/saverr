@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import ItemsComponent from "./ItemsComponent";
+import IncomeItemsComponent from "./IncomeItemsComponent";
 
 export default function IncomeCategoryCard({ category }) {
   const [toggleExpand, setToggleExpand] = useState(false);
@@ -32,7 +32,7 @@ export default function IncomeCategoryCard({ category }) {
       {!toggleExpand ? (
         <p>Click to expand...</p>
       ) : (
-        <ItemsComponent itemsList={category.incomeItems} />
+        <IncomeItemsComponent categoryObj={category} />
       )}
     </div>
   );

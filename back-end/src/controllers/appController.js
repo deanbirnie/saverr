@@ -24,10 +24,8 @@ export const getBudgets = async (req, res) => {
     console.log(err.message);
     return res.status(500).json({ error: "Internal server error." });
   } finally {
-    console.log("Disconnecting client...");
     try {
       await prisma.$disconnect();
-      console.log("Client disconnected successfully.");
     } catch (err) {
       console.error("Couldn't disconnect client: " + err.message);
     }
@@ -91,10 +89,8 @@ export const createBudget = async (req, res) => {
     console.log(err.message);
     return res.status(500).json({ error: "Internal server error." });
   } finally {
-    console.log("Disconnecting client...");
     try {
       await prisma.$disconnect();
-      console.log("Client disconnected successfully.");
     } catch (err) {
       console.error("Couldn't disconnect client: " + err.message);
     }
@@ -139,10 +135,8 @@ export const getBudgetInfo = async (req, res) => {
     console.log(err.message);
     return res.status(500).json({ error: "Internal server error." });
   } finally {
-    console.log("Disconnecting client...");
     try {
       await prisma.$disconnect();
-      console.log("Client disconnected successfully.");
     } catch (err) {
       console.error("Couldn't disconnect client: " + err.message);
     }
@@ -188,17 +182,157 @@ export const deleteBudget = async (req, res) => {
       },
     });
     if (!budget) {
-      return res.status(404).json({ message: "Budget not found." });
+      return res.status(404).json({ error: "Budget not found." });
     }
-    return res.status(200).json({ error: "Budget deleted successfully." });
+    return res.status(200).json({ message: "Budget deleted successfully." });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ error: "Internal server error." });
   } finally {
-    console.log("Disconnecting client...");
     try {
       await prisma.$disconnect();
-      console.log("Client disconnected successfully.");
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
+  }
+};
+
+export const newExpenseItem = async (req, res) => {
+  const userId = req.user;
+  const budgetId = req.body.budgetId;
+  const categoryId = req.body.categoryId;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    const newExpenseItem = await prisma.expenseItem.create({
+      data: {
+        id: uuidv4(),
+        name: req.body.name,
+        value: req.body.value,
+        expenseCategoryId: categoryId,
+        budgetId: budgetId,
+      },
+    });
+
+    if (newExpenseItem.length === 0) {
+      return res.status(401).json({ message: "Couldn't create expense item." });
+    }
+    return res.status(201).json(newExpenseItem);
+  } catch (err) {
+    console.log(err.message);
+  } finally {
+    try {
+      await prisma.$disconnect();
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
+  }
+};
+
+export const deleteExpenseItem = async (req, res) => {
+  const userId = req.user;
+  const itemId = req.query.id;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    const deletedExpenseItem = await prisma.expenseItem.delete({
+      where: {
+        id: itemId,
+      },
+    });
+    if (!deletedExpenseItem) {
+      return res.status(404).json({ error: "Item not found." });
+    }
+    return res.status(200).json({ message: "Item deleted successfully." });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ error: "Internal server error." });
+  } finally {
+    try {
+      await prisma.$disconnect();
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
+  }
+};
+
+export const newIncomeItem = async (req, res) => {
+  const userId = req.user;
+  const budgetId = req.body.budgetId;
+  const categoryId = req.body.categoryId;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    const newIncomeItem = await prisma.incomeItem.create({
+      data: {
+        id: uuidv4(),
+        name: req.body.name,
+        value: req.body.value,
+        incomeId: categoryId,
+        budgetId: budgetId,
+      },
+    });
+
+    if (newIncomeItem.length === 0) {
+      return res.status(401).json({ message: "Couldn't create income item." });
+    }
+    return res.status(201).json(newIncomeItem);
+  } catch (err) {
+    console.log(err.message);
+  } finally {
+    try {
+      await prisma.$disconnect();
+    } catch (err) {
+      console.error("Couldn't disconnect client: " + err.message);
+    }
+  }
+};
+
+export const deleteIncomeItem = async (req, res) => {
+  const userId = req.user;
+  const itemId = req.query.id;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    const deletedIncomeItem = await prisma.incomeItem.delete({
+      where: {
+        id: itemId,
+      },
+    });
+    if (!deletedIncomeItem) {
+      return res.status(404).json({ error: "Item not found." });
+    }
+    return res.status(200).json({ message: "Item deleted successfully." });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ error: "Internal server error." });
+  } finally {
+    try {
+      await prisma.$disconnect();
     } catch (err) {
       console.error("Couldn't disconnect client: " + err.message);
     }
