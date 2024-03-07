@@ -9,6 +9,7 @@ export default function AuthComponent({
 }) {
   const [formData, setFormData] = useState({});
   const [errMsg, setErrMsg] = useState(null);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,26 +23,27 @@ export default function AuthComponent({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      console.log(res.message);
-      if (res.ok === true) {
-        const data = await res.json();
-        // console.log(data);
-        if (data) {
-          setSignedIn(true);
-          // console.log("Navigating to /");
-          navigate("/");
-        }
+      if (formData.password !== formData.passwordConf) {
+        setErrMsg("Passwords do not match.");
       } else {
-        const errData = await res.json();
-        setErrMsg(errData.message);
-        setSignedIn(false);
+        const filteredFormData = Object.fromEntries(
+          Object.entries(formData).filter(([key]) => key !== "passwordConf")
+        );
+        const res = await fetch("/api/auth/create-user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(filteredFormData),
+        });
+        console.log(res.message);
+        if (res.ok === true) {
+          onSwitchUserForm();
+        } else {
+          const errData = await res.json();
+          setErrMsg(errData.message);
+          setSignedIn(false);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -52,7 +54,7 @@ export default function AuthComponent({
   return (
     <>
       <div className="border my-10 rounded-xl p-5 max-w-lg mx-auto flex flex-col gap-6">
-        <h1 className="text-3xl text-center font-semibold mt-5">Sign In</h1>
+        <h1 className="text-3xl text-center font-semibold mt-5">Sign Up</h1>
         <form className="flex flex-col gap-4 my-3" onSubmit={handleSubmit}>
           <input
             type="email"
@@ -62,10 +64,24 @@ export default function AuthComponent({
             onChange={handleChange}
           />
           <input
+            type="text"
+            placeholder="Name"
+            className="border p-3 rounded-lg"
+            id="name"
+            onChange={handleChange}
+          />
+          <input
             type="password"
             placeholder="Your Password"
             className="border p-3 rounded-lg"
             id="password"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="border p-3 rounded-lg"
+            id="passwordConf"
             onChange={handleChange}
           />
           <div className="text-red-600 font-semibold">
@@ -74,11 +90,11 @@ export default function AuthComponent({
             )}
           </div>
           <button className="bg-green-400 p-3 rounded-lg font-semibold uppercase hover:opacity-80 max-w-40">
-            Sign In
+            Sign Up
           </button>
         </form>
         <button className="uppercase" onClick={handleSwitchUserForm}>
-          Sign Up?
+          Sign In?
         </button>
       </div>
     </>
