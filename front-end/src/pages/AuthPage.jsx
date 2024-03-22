@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+// import { useState } from "react";
 import PropTypes from "prop-types";
 import AuthComponent from "../components/AuthComponent";
 import RegistrationComponent from "../components/RegistrationComponent";
 import Footer from "../components/Footer";
 
 export default function AuthPage({ signedIn, setSignedIn }) {
-  const [userForm, setUserForm] = useState(true);
+  // const [userForm, setUserForm] = useState(true);
 
-  const handleFormState = () => {
-    setUserForm(!userForm);
-  };
+  // const handleFormState = () => {
+  //   setUserForm(!userForm);
+  // };
 
   return (
     <>
       <div>
-        {!signedIn && userForm ? (
+        <AuthComponent
+          signedIn={signedIn}
+          setSignedIn={setSignedIn}
+          // onSwitchUserForm={handleFormState}
+        />
+        {/* Used for registration in the case of a publicly accessible site. */}
+        {/* {!signedIn && userForm ? (
           <AuthComponent
             signedIn={signedIn}
             setSignedIn={setSignedIn}
@@ -26,7 +33,7 @@ export default function AuthPage({ signedIn, setSignedIn }) {
             setSignedIn={setSignedIn}
             onSwitchUserForm={handleFormState}
           />
-        )}
+        )} */}
       </div>
       <Footer />
     </>
