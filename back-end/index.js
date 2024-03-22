@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { authRouter } from "./src/routes/authRoutes.js";
 import { appRouter } from "./src/routes/appRoutes.js";
+import { statsRouter } from "./src/routes/statsRoutes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -20,6 +21,9 @@ app.use("/api/auth", authRouter);
 
 // Application API
 app.use("/api/app", appRouter);
+
+// Stats API
+app.use("/api/stats", statsRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
