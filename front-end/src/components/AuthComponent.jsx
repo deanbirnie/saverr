@@ -77,9 +77,9 @@ export default function AuthComponent({
             Sign In
           </button>
         </form>
-        <button className="uppercase" onClick={handleSwitchUserForm}>
+        {/* <button className="uppercase" onClick={handleSwitchUserForm}>
           Sign Up?
-        </button>
+        </button> */}
       </div>
     </>
   );
